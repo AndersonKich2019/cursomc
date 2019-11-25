@@ -28,8 +28,7 @@ public class Produto implements Serializable {
 	@ManyToMany // Muitos pra muitos
 	@JoinTable(name = "PRODUTO_CAREGORIA",
 		joinColumns = @JoinColumn(name = "produto_id"),
-		inverseJoinColumns = @JoinColumn(name = "categoria_id")
-	)
+		inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private List<Categoria> categorias = new ArrayList<>();//Associação com a tabela Categoria
 	
 	public Produto() {

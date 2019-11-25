@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.andersonkich.cursomc.domain.enuns.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cliente implements Serializable {
@@ -28,12 +29,16 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
 	
+	@JsonManagedReference 
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")//Cria uma tabelhinha de telefones
 	private Set<String> telefones = new HashSet<>();//O set não aceita repetições
+	
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidios = new ArrayList<>();
 	
 	public Cliente() {
 		
@@ -103,6 +108,14 @@ public class Cliente implements Serializable {
 		this.telefones = telefones;
 	}
 
+	public List<Pedido> getPedidios() {
+		return pedidios;
+	}
+
+	public void setPedidios(List<Pedido> pedidios) {
+		this.pedidios = pedidios;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

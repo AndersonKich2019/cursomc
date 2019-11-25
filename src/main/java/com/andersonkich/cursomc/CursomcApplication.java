@@ -1,5 +1,6 @@
 package com.andersonkich.cursomc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.andersonkich.cursomc.domain.Cidade;
 import com.andersonkich.cursomc.domain.Cliente;
 import com.andersonkich.cursomc.domain.Endereco;
 import com.andersonkich.cursomc.domain.Estado;
+import com.andersonkich.cursomc.domain.Pagamento;
+import com.andersonkich.cursomc.domain.PagamentoComBoleto;
+import com.andersonkich.cursomc.domain.PagamentoComCartao;
+import com.andersonkich.cursomc.domain.Pedido;
 import com.andersonkich.cursomc.domain.Produto;
+import com.andersonkich.cursomc.domain.enuns.EstadoPagamento;
 import com.andersonkich.cursomc.domain.enuns.TipoCliente;
 import com.andersonkich.cursomc.repositories.CategoriaRepository;
 import com.andersonkich.cursomc.repositories.CidadeRepository;
 import com.andersonkich.cursomc.repositories.ClienteRepository;
 import com.andersonkich.cursomc.repositories.EnderecoRepository;
 import com.andersonkich.cursomc.repositories.EstadoRepository;
+import com.andersonkich.cursomc.repositories.PagamentoRepository;
+import com.andersonkich.cursomc.repositories.PedidoRepository;
 import com.andersonkich.cursomc.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -28,6 +36,9 @@ public class CursomcApplication implements CommandLineRunner {//CommandLineRunne
 		SpringApplication.run(CursomcApplication.class, args);
 	}
 
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	@Autowired
@@ -40,6 +51,10 @@ public class CursomcApplication implements CommandLineRunner {//CommandLineRunne
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private PedidoRepository pedidoRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {//Metodo do CommandLineRunner
@@ -86,6 +101,21 @@ public class CursomcApplication implements CommandLineRunner {//CommandLineRunne
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(en1, en2));
 		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, en1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, en2);
+		
+		Pagamento pag1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pag1);
+		
+		Pagamento pag2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf1.parse("20/10/2017"), null); 
+		ped2.setPagamento(pag2);
+		
+		cli1.getPedidios().addAll(Arrays.asList(ped1, ped2));
+		
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pag1, pag2));
+		clienteRepository.saveAll(Arrays.asList(cli1));
+
 	}
 
 }
