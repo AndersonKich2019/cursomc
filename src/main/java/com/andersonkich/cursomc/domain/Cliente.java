@@ -2,8 +2,12 @@ package com.andersonkich.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,10 +26,14 @@ public class Cliente implements Serializable {
 	private String nome;
 	private String email;
 	private String cpfOuCnpj;
-	private TipoCliente tipoCliente;
+	private Integer tipoCliente;
 	
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
+	
+	@ElementCollection
+	@CollectionTable(name="TELEFONE")//Cria uma tabelhinha de telefones
+	private Set<String> telefones = new HashSet<>();//O set não aceita repetições
 	
 	public Cliente() {
 		
@@ -36,7 +44,7 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipoCliente = tipoCliente;
+		this.tipoCliente = tipoCliente.getCodigo();
 	}
 
 	public Integer getId() {
@@ -72,11 +80,11 @@ public class Cliente implements Serializable {
 	}
 
 	public TipoCliente getTipoCliente() {
-		return tipoCliente;
+		return TipoCliente.toEnum(tipoCliente);
 	}
 
 	public void setTipoCliente(TipoCliente tipoCliente) {
-		this.tipoCliente = tipoCliente;
+		this.tipoCliente = tipoCliente.getCodigo();
 	}
 	
 	public List<Endereco> getEnderecos() {
@@ -86,6 +94,15 @@ public class Cliente implements Serializable {
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
 	}
+	
+	public Set<String> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(Set<String> telefones) {
+		this.telefones = telefones;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
