@@ -13,6 +13,7 @@ import com.andersonkich.cursomc.domain.Cidade;
 import com.andersonkich.cursomc.domain.Cliente;
 import com.andersonkich.cursomc.domain.Endereco;
 import com.andersonkich.cursomc.domain.Estado;
+import com.andersonkich.cursomc.domain.ItemPedido;
 import com.andersonkich.cursomc.domain.Pagamento;
 import com.andersonkich.cursomc.domain.PagamentoComBoleto;
 import com.andersonkich.cursomc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.andersonkich.cursomc.repositories.CidadeRepository;
 import com.andersonkich.cursomc.repositories.ClienteRepository;
 import com.andersonkich.cursomc.repositories.EnderecoRepository;
 import com.andersonkich.cursomc.repositories.EstadoRepository;
+import com.andersonkich.cursomc.repositories.ItemPedidoReposirory;
 import com.andersonkich.cursomc.repositories.PagamentoRepository;
 import com.andersonkich.cursomc.repositories.PedidoRepository;
 import com.andersonkich.cursomc.repositories.ProdutoRepository;
@@ -55,6 +57,8 @@ public class CursomcApplication implements CommandLineRunner {//CommandLineRunne
 	private PagamentoRepository pagamentoRepository;
 	@Autowired
 	private PedidoRepository pedidoRepository;
+	@Autowired
+	private ItemPedidoReposirory itemPedidoRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {//Metodo do CommandLineRunner
@@ -116,6 +120,22 @@ public class CursomcApplication implements CommandLineRunner {//CommandLineRunne
 		pagamentoRepository.saveAll(Arrays.asList(pag1, pag2));
 		clienteRepository.saveAll(Arrays.asList(cli1));
 
+		ItemPedido item1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido item2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido item3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(item1, item2));
+		ped2.getItens().addAll(Arrays.asList(item3));
+		
+		p1.getItens().addAll(Arrays.asList(item1));
+		p2.getItens().addAll(Arrays.asList(item3));
+		p3.getItens().addAll(Arrays.asList(item2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(item1, item2, item3));
+		
+		
+		
+		
 	}
 
 }
