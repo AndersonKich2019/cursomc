@@ -2,6 +2,7 @@ package com.andersonkich.cursomc.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.andersonkich.cursomc.domain.Categoria;
+import com.andersonkich.cursomc.dto.CategoriaDto;
 import com.andersonkich.cursomc.services.CategoriaService;
 
 
@@ -34,9 +36,10 @@ public class CategoriaResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Categoria>> findAll(){
+	public ResponseEntity<List<CategoriaDto>> findAll(){
 		List<Categoria> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+		List<CategoriaDto> listDto = list.stream().map(obj -> new CategoriaDto(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 		
 	}
 	
