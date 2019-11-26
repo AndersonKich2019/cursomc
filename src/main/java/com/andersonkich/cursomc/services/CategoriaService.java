@@ -66,11 +66,10 @@ public class CategoriaService {
 	}
 	
 	public Categoria fromDto(CategoriaDto objDto) {
+		
 		return new Categoria(objDto.getId(), objDto.getNome());//Converter objDto em obj
+
 	}
-	
-	
-	
 	
 	
 }
