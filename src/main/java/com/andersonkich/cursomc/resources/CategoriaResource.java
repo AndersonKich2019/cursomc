@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class CategoriaResource {
 	private CategoriaService service;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> findById(@PathVariable Integer id) {
+	public ResponseEntity<Categoria> findById(@PathVariable Integer id) {
 		Categoria obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -49,8 +50,16 @@ public class CategoriaResource {
 		 * buildAndExpand(obj.getId()).toUri() atribui o id do novo obj inserido
 		 * @RequestBody Converte obj para Json automaticamente
 		 */
+		}
 		
+
+	@PutMapping("/{id}")
+	public ResponseEntity<Object> update(@RequestBody Categoria obj, @PathVariable Integer id){
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();//noContent() retorna vazio
 	}
+	
 	
 	
 }
