@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.andersonkich.cursomc.domain.Categoria;
+import com.andersonkich.cursomc.dto.CategoriaDto;
 import com.andersonkich.cursomc.repositories.CategoriaRepository;
 import com.andersonkich.cursomc.services.exceptions.DataIntegrityException;
 import com.andersonkich.cursomc.services.exceptions.ObjectNotFoundException;
@@ -63,4 +64,13 @@ public class CategoriaService {
 		 *PageRequest pageRequest = Objeto que prepara a consulta da pagina 
 		 */
 	}
+	
+	public Categoria fromDto(CategoriaDto objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome());//Converter objDto em obj
+	}
+	
+	
+	
+	
+	
 }
