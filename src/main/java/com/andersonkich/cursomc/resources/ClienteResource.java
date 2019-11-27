@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.andersonkich.cursomc.domain.Categoria;
 import com.andersonkich.cursomc.domain.Cliente;
-import com.andersonkich.cursomc.domain.Cliente;
-import com.andersonkich.cursomc.dto.CategoriaDto;
 import com.andersonkich.cursomc.dto.ClienteDto;
 import com.andersonkich.cursomc.services.ClienteService;
 
