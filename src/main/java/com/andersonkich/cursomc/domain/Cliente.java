@@ -30,7 +30,7 @@ public class Cliente implements Serializable {
 	
 	private String nome;
 	
-	@Column(unique = true)
+	@Column(unique = true)//Faz o banco de dados garantir que não avera repetições neste campo
 	private String email;
 	
 	@Column(unique = true)
