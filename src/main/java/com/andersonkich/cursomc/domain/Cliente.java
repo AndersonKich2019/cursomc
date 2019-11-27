@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.OneToMany;
 import com.andersonkich.cursomc.domain.enuns.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import ch.qos.logback.core.subst.Token.Type;
 
 @Entity
 public class Cliente implements Serializable {
@@ -31,7 +34,7 @@ public class Cliente implements Serializable {
 	private Integer tipoCliente;
 	
 	@JsonManagedReference 
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)//se fizer alteção no cliente isso refleto nos enderecos
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection
