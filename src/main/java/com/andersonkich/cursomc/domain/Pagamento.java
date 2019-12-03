@@ -12,8 +12,10 @@ import javax.persistence.OneToOne;
 
 import com.andersonkich.cursomc.domain.enuns.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 @Inheritance(strategy = InheritanceType.JOINED)//Mapeamento por herança poder ser criado uma tabela para cada filho ou um tabelão com os dois
 public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
