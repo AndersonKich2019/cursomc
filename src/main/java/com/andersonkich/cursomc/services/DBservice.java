@@ -139,7 +139,6 @@ public class DBservice {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pag1, pag2));
-		clienteRepository.saveAll(Arrays.asList(cli1));
 
 		ItemPedido item1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
 		ItemPedido item2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
