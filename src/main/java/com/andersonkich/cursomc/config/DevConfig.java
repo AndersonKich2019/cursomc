@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.andersonkich.cursomc.services.DBservice;
+import com.andersonkich.cursomc.services.EmailService;
+import com.andersonkich.cursomc.services.MockEmailService;
+import com.andersonkich.cursomc.services.SMTPEmailService;
 
 @Configuration//Para ser um arquivo de configuçao
 @Profile("dev")//indica meu profile
@@ -29,4 +32,10 @@ public class DevConfig {
 		dbService.instantiateDatabase();
 		return true;
 	}
+	
+	@Bean
+	public EmailService emailService() {
+		return new SMTPEmailService();
+	}
+	
 }
