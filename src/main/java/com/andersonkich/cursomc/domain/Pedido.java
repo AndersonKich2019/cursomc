@@ -42,6 +42,8 @@ public class Pedido implements Serializable {
 	@JoinColumn(name="enderecoDeEntrega_id")
 	private Endereco enderecoDeEntrega;
 	
+	private Double valorTotal;
+	
 	@OneToMany(mappedBy = "id.pedido")
 	private Set<ItemPedido> itens = new HashSet<>();//lista dos itens de pedido
 
@@ -160,6 +162,12 @@ public class Pedido implements Serializable {
 		builder.append(nf.format(getTotal()));
 		return builder.toString();
 	}
+
+	public Double getValorTotal() {
+		return getTotal();
+	}
+
+	
 	
 	
 	
