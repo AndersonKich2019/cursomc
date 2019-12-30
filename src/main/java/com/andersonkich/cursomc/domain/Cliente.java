@@ -17,8 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.andersonkich.cursomc.domain.enuns.TipoCliente;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Cliente implements Serializable {
@@ -38,7 +37,6 @@ public class Cliente implements Serializable {
 	
 	private Integer tipoCliente;
 	
-	@JsonManagedReference 
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)//se fizer alteção no cliente isso refleto nos enderecos
 	private List<Endereco> enderecos = new ArrayList<>();
 	
@@ -46,7 +44,7 @@ public class Cliente implements Serializable {
 	@CollectionTable(name="TELEFONE")//Cria uma tabelhinha de telefones
 	private Set<String> telefones = new HashSet<>();//O set não aceita repetições
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidios = new ArrayList<>();
 	
